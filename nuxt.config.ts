@@ -1,4 +1,5 @@
 import { defineNuxtConfig } from 'nuxt'
+import istanbul from 'vite-plugin-istanbul'
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
@@ -7,6 +8,18 @@ export default defineNuxtConfig({
     build: {
         transpile: ['@heroicons/vue']
     },
+	vite: {
+		build: {
+		  sourcemap: true
+		},
+		plugins: [
+		  istanbul({
+			exclude: ['node_modules', 'test/', 'coverage/', 'cypress/'],
+			extension: ['.js', '.ts', '.vue'],
+			cypress:true
+		  })
+		]
+	  },
 
     runtimeConfig: {
         jwtAccessSecret: process.env.JWT_ACCESS_TOKEN_SECRET,
